@@ -1,0 +1,34 @@
+// grid items ...
+{
+    text: 'gridTextColumn',
+    dataIndex: 'A',
+    flex: 1,
+    editor: {
+        xtype: 'combobox',
+        bind: {
+            store: '{gridTextColumnStore}'
+        },
+        markDirty: false,
+        emptyText: 'No Data', 
+        queryMode: 'local',
+        displayField: 'AName',
+        valueField: 'AId',
+        editable: false,
+        listeners: {
+            change: function(combo, newValue, oldValue) {
+                var record = combo.up('grid').getSelectionModel().getSelection()[0];
+                if (record) {
+                    var currentComboRecord = combo.getStore().findRecord('AId', combo.getValue());
+                    if (!currentComboRecord) {
+                        combo.setValue(null);
+                        combo.up('grid').editingPlugin.completeEdit();
+                        return;
+                    }
+                    record.set('AId', newValue);
+                }
+                combo.up('grid').editingPlugin.completeEdit();
+            }
+        }
+    },
+    renderer: 'onRendererGridTextColumn',
+}
