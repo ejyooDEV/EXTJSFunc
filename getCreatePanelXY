@@ -1,0 +1,14 @@
+// 동적으로 생성하는 패널일 때, window의 height 값을 계산하여 잘리지 않게 하는 함수
+getCreatePanelXY: function (div, divHeight) {
+    var windowHeight = window.innerHeight;
+    var divXY = {
+        x: div.getX() + 20, 
+        y: div.getY() + 20,
+    };
+
+    if (divXY.y + divHeight > windowHeight) {
+        divXY.y = divXY.y - divHeight;
+    }
+
+    return divXY;
+},
